@@ -1,12 +1,14 @@
 # Field: XML Select Box
 
-* Version: 0.3.1
-* Build Date: 2009-09-07
-* Requirements: Symphony 2.0.2
+* Version: 0.4
+* Build Date: 2010-05-04
+* Requirements: Symphony 2.0.6+
 * Authors:
 	- Nick Dunn <http://github.com/nickdunn/>
 	- Richard Warrender <http://github.com/rwarrender>
 	- Tony Arnold <http://github.com/tonyarnold>
+	- Craig Zheng <http://github.com/czheng>
+	- Brian Zerangue <http://github.com/bzerangue>
 
 ## Installation
 
@@ -48,3 +50,8 @@ Label: text()
 Caching of the XML file is applied only when using a URL as the "XML Location". Local XML files are not cached. If your feed changes infrequently, set the cache interval high to perhaps several hours, days or even weeks. If the data changes frequently then use a lower value (1 minute minimum) but be aware of the performance implications for your users.
 
 The XML is parsed both to build the selectbox in the backend *and* when writing its value to Data Source XML, so a high cache interval is recommended.
+
+
+### Choose Field Type (Select Box or Autocomplete) - Available in version 0.4
+
+With inspiration from Craig Zheng's referencelink field that employs field types selectbox and autocomplete, we added the autocomplete functionality to easily add from your existing XML.
