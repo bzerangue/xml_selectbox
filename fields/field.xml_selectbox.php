@@ -140,15 +140,43 @@
 			if ($value_found == false && $data[0] != null) {
 				$options[] = array($data['value'][0], $data['value'][0]);
 			}
-			
+			/*
 			$fieldname = 'fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix;
 			if($this->get('allow_multiple_selection') == 'yes') $fieldname .= '[]';
 			
 			$label = Widget::Label($this->get('label'));
+			
 			$label->appendChild(Widget::Select($fieldname, $options, ($this->get('allow_multiple_selection') == 'yes' ? array('multiple' => 'multiple') : NULL)));
 			
 			if($flagWithError != NULL) $wrapper->appendChild(Widget::wrapFormElementWithError($label, $flagWithError));
-			else $wrapper->appendChild($label);		
+			else $wrapper->appendChild($label);	
+			*/
+			
+			// build label and input html
+			$fieldname = 'fields' . $fieldnamePrefix . '[' . $this->get('element_name') . ']' . $fieldnamePostfix;
+			if($this->get('allow_multiple_selection') == 'yes') $fieldname .= '[]';
+
+			$html_attributes = array();
+			if($this->get('allow_multiple_selection') == 'yes') {
+				$html_attributes['multiple'] = 'multiple';
+			}
+			if($this->get('field_type') == 'autocomplete') {
+				$html_attributes['class'] = 'replace-ac';
+			}
+			$html_attributes['id'] = $fieldname;
+
+			$label = Widget::Label($this->get('label'));
+			if($this->get('required') != 'yes') $label->appendChild(new XMLElement('i', 'Optional'));
+			$label->appendChild(Widget::Select($fieldname, $options, $html_attributes));
+
+			if($flagWithError != NULL) {
+				$wrapper->appendChild(Widget::wrapFormElementWithError($label, $flagWithError));
+			}
+			else {
+				$wrapper->appendChild($label);
+			}
+			
+				
 		}
 
 		function prepareTableValue($data, XMLElement $link=NULL){
@@ -169,18 +197,35 @@
 		public function processRawFieldData($data, &$status, $simulate=false, $entry_id=NULL){
 
 			$status = self::__OK__;
-
-			if(!is_array($data)) return array('value' => General::sanitize($data));
-
-			if(empty($data)) return NULL;
 			
-			$result = array('value' => array());
-
-			foreach($data as $value){ 
-				$result['value'][] = $value;
-			}		
-			
-			return $result;
+			if($this->get('field_type') == 'autocomplete') {
+				if($this->get('allow_multiple_selection') == 'yes') {
+					$list = $data[0];
+					$ids = explode(", ", $list);
+					foreach($ids as $id) {
+						if($id != '') {
+							$result['value'][] = $id;
+						}
+					}
+					return $result;
+				}
+				else {
+					return array('value' => $data);
+				}
+			}
+			else {
+				if(!is_array($data)) return array('value' => General::sanitize($data));
+	
+				if(empty($data)) return NULL;
+				
+				$result = array('value' => array());
+	
+				foreach($data as $value){ 
+					$result['value'][] = $value;
+				}		
+				
+				return $result;
+			}
 		}
 		
 		function commit(){
@@ -199,6 +244,7 @@
 			if($this->get('text_xpath') != '') $fields['text_xpath'] = $this->get('text_xpath');
 			if($this->get('value_xpath') != '') $fields['value_xpath'] = $this->get('value_xpath');
 			if($this->get('cache') != '') $fields['cache'] = $this->get('cache');
+			$fields['field_type'] = ($this->get('field_type') ? $this->get('field_type') : 'select');
 			$fields['allow_multiple_selection'] = ($this->get('allow_multiple_selection') ? $this->get('allow_multiple_selection') : 'no');
 
 			$this->Database->query("DELETE FROM `tbl_fields_".$this->handle()."` WHERE `field_id` = '$id' LIMIT 1");
@@ -256,6 +302,11 @@
 			
 			$wrapper->appendChild($div);
 			
+			// set field type
+			$label = Widget::Label('Field Type');
+			$type_options = array(array('select', ($this->get('field_type') == 'select'), 'Select Box'), array('autocomplete', ($this->get('field_type') == 'autocomplete'), 'Autocomplete Input'));
+			$label->appendChild(Widget::Select('fields[' . $this->get('sortorder') . '][field_type]', $type_options));
+			$div->appendChild($label);
 			
 			## Allow selection of multiple items
 			$label = Widget::Label();
