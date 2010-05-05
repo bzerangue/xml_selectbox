@@ -140,17 +140,6 @@
 			if ($value_found == false && $data[0] != null) {
 				$options[] = array($data['value'][0], $data['value'][0]);
 			}
-			/*
-			$fieldname = 'fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix;
-			if($this->get('allow_multiple_selection') == 'yes') $fieldname .= '[]';
-			
-			$label = Widget::Label($this->get('label'));
-			
-			$label->appendChild(Widget::Select($fieldname, $options, ($this->get('allow_multiple_selection') == 'yes' ? array('multiple' => 'multiple') : NULL)));
-			
-			if($flagWithError != NULL) $wrapper->appendChild(Widget::wrapFormElementWithError($label, $flagWithError));
-			else $wrapper->appendChild($label);	
-			*/
 			
 			// build label and input html
 			$fieldname = 'fields' . $fieldnamePrefix . '[' . $this->get('element_name') . ']' . $fieldnamePostfix;
