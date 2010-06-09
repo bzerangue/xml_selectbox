@@ -1,20 +1,12 @@
 # Field: XML Select Box
 
-<<<<<<< HEAD
-* Version: 0.4
-* Build Date: 2010-05-04
-* Requirements: Symphony 2.0.6+
-=======
 * Version: 0.3.3
 * Build Date: 2010-06-02
 * Requirements: Symphony 2.0.2
->>>>>>> original/master
 * Authors:
 	- Nick Dunn <http://github.com/nickdunn/>
 	- Richard Warrender <http://github.com/rwarrender>
 	- Tony Arnold <http://github.com/tonyarnold>
-	- Craig Zheng <http://github.com/czheng>
-	- Brian Zerangue <http://github.com/bzerangue>
 
 ## Installation
 
@@ -58,6 +50,6 @@ Caching of the XML file is applied only when using a URL as the "XML Location". 
 The XML is parsed both to build the selectbox in the backend *and* when writing its value to Data Source XML, so a high cache interval is recommended.
 
 
-### Choose Field Type (Select Box or Autocomplete) - Available in version 0.4
+### Choose Field Type (Select Box or Autocomplete)
 
 With inspiration from Craig Zheng's referencelink field that employs field types selectbox and autocomplete, we added the autocomplete functionality to easily add from your existing XML.
