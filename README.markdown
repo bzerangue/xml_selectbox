@@ -1,8 +1,14 @@
 # Field: XML Select Box
 
+<<<<<<< HEAD
 * Version: 0.4
 * Build Date: 2010-05-04
 * Requirements: Symphony 2.0.6+
+=======
+* Version: 0.3.3
+* Build Date: 2010-06-02
+* Requirements: Symphony 2.0.2
+>>>>>>> original/master
 * Authors:
 	- Nick Dunn <http://github.com/nickdunn/>
 	- Richard Warrender <http://github.com/rwarrender>
@@ -32,7 +38,7 @@ XML sources can be loaded into the field in three ways using the "XML Location" 
 
 1. Using the commonly-used XML files that come with the field. Simply enter the name of the XML file, e.g. `countries_en.xml`
 2. Referencing a local XML file in your Symphony site. Prefix the XML path with a forward-slash to locate a file inside your web root e.g. `/workspace/xml/foo.xml` or `/assets/bar.xml`
-3. Use the URL of a valid XML source e.g. `http://nick-dunn.co.uk/rss/`
+3. Use the URL of a valid XML source e.g. `http://nick-dunn.co.uk/rss/`. This string can contain params `{$root}` and `{$workspace}` for local URLs.
 
 ### Selecting data from the XML
 
@@ -40,10 +46,10 @@ The "Item" option accepts an XPath expression. Each selected node is used to cre
 
 By means of example, you would use this configuration for a list of countries (XML file included with this extension):
 
-XML Location: countries_en.xml
-Item: //country
-Value: @abbr
-Label: text()
+XML Location: `countries_en.xml`  
+Item: `//country`  
+Value: `@abbr`  
+Label: `text()`
 
 ### Caching
 

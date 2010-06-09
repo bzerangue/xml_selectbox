@@ -46,7 +46,11 @@
 			$cache_life = (int) $this->get('cache');
 			
 			require(TOOLKIT . '/util.validators.php');
-						
+			
+			// allow use of choice params in URL
+			$xml_location = preg_replace('/{\$root}/', URL, $xml_location);
+			$xml_location = preg_replace('/{\$workspace}/', WORKSPACE, $xml_location);
+			
 			if (preg_match($validators['URI'], $xml_location)) {
 				// is a URL, check cache
 								
@@ -83,12 +87,10 @@
 				$xml = simplexml_load_file(EXTENSIONS . '/xml_selectbox/xml/' . $this->get('xml_location'));
 			}
 			
-			if (!$xml) return;
+			$options = array();
+			if (!$xml) return $options;
 			
 			$items = $xml->xpath($this->get('item_xpath'));
-			
-			$options = array();
-			
 			foreach($items as $item) {
 				
 				$option = array();
